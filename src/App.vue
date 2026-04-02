@@ -1,47 +1,71 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref, computed } from 'vue'
+
+const numero1 = ref(0)
+const numero2 = ref(0)
+const operacao = ref('+')
+
+
+const resultado = computed(() => {
+    const n1 = Number(numero1.value)
+    const n2 = Number(numero2.value)
+
+    switch (operacao.value) {
+        case '+':
+            return n1 + n2
+        case '-':
+            return n1 - n2
+        case '*':
+            return n1 * n2
+        default:
+            return 0
+    }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <div class="container">
+        <h1>Calculadora VUE</h1>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <input 
+            type="number" 
+            v-model="numero1" 
+            placeholder="Número 1"
+        >
+
+        <select v-model="operacao">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+
+        <input 
+            type="number" 
+            v-model="numero2" 
+            placeholder="Número 2"
+        >
+
+        <h2>Resultado: {{ resultado }}</h2>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: Arial;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+input, select {
+    padding: 8px;
+    font-size: 16px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+h1 {
+    text-align: center;
 }
 </style>
